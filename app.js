@@ -26,4 +26,5 @@ app.listen(process.env.PORT || 9000, () => {
  * 
  * npm install mongoose
  * npm install config
+ * npm install jsonwebtoken
  */
