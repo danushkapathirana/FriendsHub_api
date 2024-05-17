@@ -2,6 +2,9 @@ const express = require("express")
 require("dotenv").config()
 const config = require("config")
 const { default: mongoose } = require("mongoose")
+const bodyParser = require("body-parser")
+
+const routes = require("./routes")
 
 const databaseConnection = async() => {
     try {
@@ -16,6 +19,9 @@ const databaseConnection = async() => {
 const app = express()
 databaseConnection()
 
+app.use(bodyParser.json()) //"body-parser" middleware to parse incoming request bodies in JSON format
+app.use("/app", routes)
+
 app.listen(process.env.PORT || 9000, () => {
     console.log("server started")
 })
@@ -27,4 +33,16 @@ app.listen(process.env.PORT || 9000, () => {
  * npm install mongoose
  * npm install config
  * npm install jsonwebtoken
+ * npm install express-validator
+ * npm install bcryptjs
+ */
+
+/**
+ * API endpoint
+ * 
+ * user
+ * =====
+ * 
+ * /app/user/create => new user creation
+ * /app/user/login => user login
  */
