@@ -35,6 +35,43 @@ const userController = {
         catch(error) {
             return res.status(400).send({"message": "new user creation encountered an error", "error": error.message})
         }
+    },
+
+    loginUser: async(req, res) => {
+        try {
+            const validationErrors = validationResult(req)
+            if(!validationErrors.isEmpty()) {
+                console.log(validationErrors.errors)
+
+                if(validationErrors.errors.length > 0) {
+                    const errorMsg = validationErrors.errors.map((error) => error.msg)
+                    console.log(errorMsg)
+
+                    return res.status(403).send({errorMsg})
+                }
+            }
+
+            const{email, password} = req.body
+            let loginUser = await User.findOne({ email })
+
+            if(!loginUser) {
+                return res.status(401).send({"message": "username or password is invalid"})
+            }
+
+            const isPasswordMatch = await bcrypt.compare(password, loginUser.password)
+
+            if(!isPasswordMatch) {
+                return res.status(401).send({"message": "username or password is invalid"})
+            }
+
+            const payLoad = {user: {"id": loginUser._id}}
+            const token = jwt.sign(payLoad, config.get("jwt_key"), {expiresIn: "5h"})
+
+            return res.status(200).send({"message": "user login successful", "userData": loginUser, "token": token})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "login encountered an error", "error": error.message})
+        }
     }
 }
 

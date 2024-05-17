@@ -10,4 +10,9 @@ router.post("/create", [
     check("password", "password is required").not().isEmpty()
 ], userController.createUser)
 
+router.post("/login", [
+    check("email", "email format is invalid").isEmail(),
+    check("password", "password is required").not().isEmpty()
+], userController.loginUser)
+
 module.exports = router
