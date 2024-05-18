@@ -85,6 +85,17 @@ const profileController = {
         catch(error) {
             return res.status(400).send({"message": "all records retrieval encountered an error", "error": error.message})
         }
+    },
+
+    fetchProfileById: async(req, res) => {
+        try {
+            const profile = await Profile.findOne({user: req.params.id})
+
+            return res.status(200).send({"message": "record retrieval successful", "profile": profile})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "record retrieval encountered an error", "error": error.message})
+        }
     }
 }
 
