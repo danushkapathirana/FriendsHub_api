@@ -10,4 +10,6 @@ router.post("/", [
     check("location", "location is required").not().isEmpty()
 ], middleware, profileController.createAndUpdateProfile)
 
+router.post("/education", middleware, profileController.createEducation)
+
 module.exports = router

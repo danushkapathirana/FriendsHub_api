@@ -50,6 +50,28 @@ const profileController = {
         catch(error) {
             return res.status(400).send({"message": "profile creation encountered an error", "error": error.message})
         }
+    },
+
+    createEducation: async(req, res) => {
+        try {
+            const{ school, degree, from, to, description } = req.body
+
+            const educationObject = {}
+            if(school) educationObject.school = school
+            if(degree) educationObject.degree = degree
+            if(from) educationObject.from = from
+            if(to) educationObject.to = to
+            if(description) educationObject.description = description
+
+            const profile = await Profile.findOne({user: req.userId})
+            profile.education.unshift(educationObject) //set the recent education entry at the first element of the array
+            await profile.save()
+
+            return res.status(200).send({"message": "education entry successful", "educationData": profile})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "education entry encountered an error", "error": error.message})
+        }
     }
 }
 
