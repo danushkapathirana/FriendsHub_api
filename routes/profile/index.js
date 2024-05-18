@@ -11,5 +11,6 @@ router.post("/", [
 ], middleware, profileController.createAndUpdateProfile)
 
 router.post("/education", middleware, profileController.createEducation)
+router.get("/", middleware, profileController.fetchAllProfiles)
 
 module.exports = router

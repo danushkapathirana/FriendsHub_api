@@ -72,6 +72,19 @@ const profileController = {
         catch(error) {
             return res.status(400).send({"message": "education entry encountered an error", "error": error.message})
         }
+    },
+
+    fetchAllProfiles: async(req, res) => {
+        try {
+            // const profiles = await Profile.find() //get all details of profiles
+            // const profiles = await Profile.find().populate("user", ["name"]) //get specified details on "user" model
+            const profiles = await Profile.find({}, {"bio": 1, "location": 1, "skills": 1}) //get only specified details of profiles and exclude all other
+
+            return res.status(200).send({"message": "all records retrieval successful", "allProfiles": profiles})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "all records retrieval encountered an error", "error": error.message})
+        }
     }
 }
 
