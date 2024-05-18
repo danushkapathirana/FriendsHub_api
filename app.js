@@ -53,4 +53,5 @@ app.listen(process.env.PORT || 9000, () => {
  * /app/profile/education => profile education entry
  * /app/profile => get all profiles
  * /app/profile/:id => get profile by id
+ * /app/profile/education/:id => delete profile education
  */

@@ -96,6 +96,21 @@ const profileController = {
         catch(error) {
             return res.status(400).send({"message": "record retrieval encountered an error", "error": error.message})
         }
+    },
+
+    removeEducation: async(req, res) => {
+        try {
+            const profile = await Profile.findOne({user: req.userId})
+            const education = profile.education //access the education array of found profile
+            const index = education.findIndex((value) => value._id.toString() === req.params.id)
+            education.splice(index, 1) //removes the item at found index
+            await profile.save()
+
+            res.status(200).send({"message": "record deletion successful"})
+        }
+        catch(error) {
+            res.status(400).send({"message": "record deletion encountered an error", "error": error.message})
+        }
     }
 }
 

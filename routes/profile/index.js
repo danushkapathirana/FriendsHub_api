@@ -13,5 +13,6 @@ router.post("/", [
 router.post("/education", middleware, profileController.createEducation)
 router.get("/", middleware, profileController.fetchAllProfiles)
 router.get("/:id", middleware, profileController.fetchProfileById)
+router.delete("/education/:id", middleware, profileController.removeEducation)
 
 module.exports = router
