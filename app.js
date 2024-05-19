@@ -54,4 +54,16 @@ app.listen(process.env.PORT || 9000, () => {
  * /app/profile => get all profiles
  * /app/profile/:id => get profile by id
  * /app/profile/education/:id => delete profile education
+ * 
+ * post
+ * =====
+ * 
+ * /app/post/ => new post creation
+ * /app/post/comment/:id => post comment entry
+ * /app/post/like/:id => put reactions
+ * /app/post/comment/:postId/:commentId => update comment
+ * /app/post => get all posts
+ * /app/post/:id => get post by id
+ * /app/post/:id => delete post
+ * /app/post/comment/:postId/:commentId => delete comment
  */
