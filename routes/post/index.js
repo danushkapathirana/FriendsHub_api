@@ -13,5 +13,6 @@ router.post("/comment/:id", middleware, postController.postComment)
 router.put("/like/:id", middleware, postController.likePost)
 router.put("/comment/:postId/:commentId", middleware, postController.updateComment)
 router.get("/", middleware, postController.fetchAllPosts)
+router.get("/:id", middleware, postController.fetchPostById)
 
 module.exports = router

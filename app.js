@@ -63,4 +63,5 @@ app.listen(process.env.PORT || 9000, () => {
  * /app/post/like/:id => put reactions
  * /app/post/comment/:postId/:commentId => update comment
  * /app/post => get all posts
+ * /app/post/:id => get post by id
  */

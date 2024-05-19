@@ -128,6 +128,19 @@ const postController = {
         catch(error) {
             return res.status(400).send({"message": "all records retrieval encountered an error", "error": error.message})
         }
+    },
+
+    fetchPostById: async(req, res) => {
+        try {
+            const{ id } = req.params
+
+            const post = await Post.findOne({_id: id})
+
+            return res.status(200).send({"message": "record retrieval successful", "post": post})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "record retrieval encountered an error", "error": error.message})
+        }
     }
 }
 
