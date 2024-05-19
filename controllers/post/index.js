@@ -47,7 +47,7 @@ const postController = {
             }
 
             const newComment = {
-                user: user.userId,
+                user: user.id,
                 name: user.name,
                 text: comment
             }
