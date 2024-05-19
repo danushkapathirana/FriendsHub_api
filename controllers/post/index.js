@@ -117,6 +117,17 @@ const postController = {
         catch(error) {
             return res.status(400).send({"message": "comment update encountered an error", "error": error.message})
         }
+    },
+
+    fetchAllPosts: async(req, res) => {
+        try {
+            const posts = await Post.find().sort({date: -1})
+
+            return res.status(200).send({"message": "all records retrieval successful", "allPosts": posts})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "all records retrieval encountered an error", "error": error.message})
+        }
     }
 }
 
