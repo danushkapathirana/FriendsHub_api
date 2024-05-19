@@ -89,6 +89,34 @@ const postController = {
         catch(error) {
             return res.status(400).send({"message": "reaction encountered an error", "error": error.message})
         }
+    },
+
+    updateComment: async(req, res) => {
+        try {
+            const{ comment } = req.body
+
+            const post = await Post.findById(req.params.postId)
+            if(!post) {
+                return res.status(404).send({"message": "page not found"})
+            }
+
+            const existingComment = post.comments.find((comment) => comment._id.toString() === req.params.commentId)
+            if(!existingComment) {
+                return res.status(404).send({"message": "comment not found"})
+            }
+
+            if(req.userId !== existingComment.user.toString()) {
+                return res.status(401).send({"message": "comment updating restricted to the author"})
+            }
+
+            existingComment.text = comment
+            await post.save()
+
+            return res.status(200).send({"message": "comment update successful", "commentData": post})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "comment update encountered an error", "error": error.message})
+        }
     }
 }
 
