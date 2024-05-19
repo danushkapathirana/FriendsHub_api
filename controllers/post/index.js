@@ -141,6 +141,25 @@ const postController = {
         catch(error) {
             return res.status(400).send({"message": "record retrieval encountered an error", "error": error.message})
         }
+    },
+
+    removePost: async(req, res) => {
+        try {
+            const{ id } = req.params
+
+            const post = await Post.findOne({_id: id})
+
+            if(post.user.toString() !== req.userId) {
+                return res.status(401).send({"message": "post deleting restricted to the author"})
+            }
+
+            await Post.findByIdAndDelete(id)
+
+            return res.status(200).send({"message": "post deletion successful"})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "post deletion encountered an error", "error": error.message})
+        }
     }
 }
 

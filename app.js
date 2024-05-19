@@ -64,4 +64,5 @@ app.listen(process.env.PORT || 9000, () => {
  * /app/post/comment/:postId/:commentId => update comment
  * /app/post => get all posts
  * /app/post/:id => get post by id
+ * /app/post/:id => delete post
  */
