@@ -33,6 +33,33 @@ const postController = {
         catch(error) {
             return res.status(400).send({"message": "post creation encountered an error", "error": error.message})
         }
+    },
+
+    postComment: async(req, res) => {
+        try {
+            const{ comment } = req.body
+
+            const post = await Post.findById(req.params.id)
+            const user = await User.findById(req.userId).select("-password") //"-password", do not select password
+
+            if(!post) {
+                return res.status(404).send({"message": "page not found"})
+            }
+
+            const newComment = {
+                user: user.userId,
+                name: user.name,
+                text: comment
+            }
+
+            post.comments.unshift(newComment)
+            await post.save()
+
+            return res.status(200).send({"message": "comment entry successful", "commentData": post})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "comment entry encountered an error", "error": error.message})
+        }
     }
 }
 

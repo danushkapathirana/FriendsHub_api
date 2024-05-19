@@ -9,4 +9,6 @@ router.post("/", [
     check("text", "text is required").not().isEmpty()
 ], middleware, postController.createPost)
 
+router.post("/comment/:id", middleware, postController.postComment)
+
 module.exports = router

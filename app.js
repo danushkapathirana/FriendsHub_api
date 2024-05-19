@@ -59,4 +59,5 @@ app.listen(process.env.PORT || 9000, () => {
  * =====
  * 
  * /app/post/ => new post creation
+ * /app/post/comment/:id => post comment entry
  */
