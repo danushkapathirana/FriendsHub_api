@@ -160,6 +160,33 @@ const postController = {
         catch(error) {
             return res.status(400).send({"message": "post deletion encountered an error", "error": error.message})
         }
+    },
+
+    removeComment: async(req, res) => {
+        try {
+            const post = await Post.findById(req.params.postId)
+            if(!post) {
+                return res.status(404).send({"message": "page not found"})
+            }
+
+            const comment = post.comments.find((comment) => comment._id.toString() === req.params.commentId)
+            if(!comment) {
+                return res.status(404).send({"message": "comment not found"})
+            }
+
+            if(req.userId !== comment.user.toString()) {
+                return res.status(401).send({"message": "comment deletion restricted to the author"})
+            }
+
+            const index = post.comments.findIndex((comment) => comment._id.toString() === req.params.commentId)
+            post.comments.splice(index, 1)
+            await post.save()
+
+            return res.status(200).send({"message": "comment deletion successful"})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "comment deletion encountered an error", "error": error.message})
+        }
     }
 }
 

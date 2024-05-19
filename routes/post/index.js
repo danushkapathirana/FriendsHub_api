@@ -15,5 +15,6 @@ router.put("/comment/:postId/:commentId", middleware, postController.updateComme
 router.get("/", middleware, postController.fetchAllPosts)
 router.get("/:id", middleware, postController.fetchPostById)
 router.delete("/:id", middleware, postController.removePost)
+router.delete("/comment/:postId/:commentId", middleware, postController.removeComment)
 
 module.exports = router
