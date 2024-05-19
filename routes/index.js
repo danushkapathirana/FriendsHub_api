@@ -7,6 +7,6 @@ const postRoute = require("./post")
 
 router.use("/user", userRoute)
 router.use("/profile", profileRoute)
-// router.use("/post", postRoute)
+router.use("/post", postRoute)
 
 module.exports = router
