@@ -60,6 +60,35 @@ const postController = {
         catch(error) {
             return res.status(400).send({"message": "comment entry encountered an error", "error": error.message})
         }
+    },
+
+    likePost: async(req, res) => {
+        try {
+            const{ reactionType } = req.body
+
+            const post = await Post.findById(req.params.id)
+
+            if(!post) {
+                return res.status(404).send({"message": "page not found"})
+            }
+
+            // unlike logic, if already liked
+            const likedByUser = post.likes.filter((like) => like.user.toString() === req.userId)
+            if(likedByUser.length > 0) {
+                const index = post.likes.findIndex((value) => value.user === req.userId)
+                post.likes.splice(index, 1)
+            }
+            else {
+                // like logic
+                post.likes.unshift({user: req.userId, "reactionType": reactionType})
+            }
+            await post.save()
+
+            return res.status(200).send({"message": "liked", "reactionData": post})
+        }
+        catch(error) {
+            return res.status(400).send({"message": "reaction encountered an error", "error": error.message})
+        }
     }
 }
 

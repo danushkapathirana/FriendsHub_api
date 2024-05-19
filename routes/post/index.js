@@ -10,5 +10,6 @@ router.post("/", [
 ], middleware, postController.createPost)
 
 router.post("/comment/:id", middleware, postController.postComment)
+router.put("/like/:id", middleware, postController.likePost)
 
 module.exports = router
